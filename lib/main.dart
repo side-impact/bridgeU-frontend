@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'providers/auth_provider.dart';
 import 'screens/login_screen.dart';
+import 'screens/community_screen.dart';
 
-void main() {
-  runApp(const BridgeUApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final authProvider = AuthProvider();
+  await authProvider.tryAutoLogin(); // 앱 시작할 때 토큰 체크
+
+  runApp(
+    ChangeNotifierProvider.value(
+      value: authProvider,
+      child: const BridgeUApp(),
+    ),
+  );
 }
 
 class BridgeUApp extends StatelessWidget {
@@ -10,12 +23,20 @@ class BridgeUApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'BridgeU',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const LoginScreen(),
+    return Consumer<AuthProvider>(
+      builder: (context, authProvider, _) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+          routes: {
+            '/login': (ctx) => const LoginScreen(),
+            '/community': (ctx) => const CommunityScreen(),
+          },
+          home: authProvider.isLoggedIn
+              ? const CommunityScreen()
+              : const LoginScreen(),
+        );
+      },
     );
   }
 }
