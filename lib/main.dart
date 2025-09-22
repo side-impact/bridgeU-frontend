@@ -3,12 +3,16 @@ import 'package:provider/provider.dart';
 import 'providers/auth_provider.dart';
 import 'screens/login_screen.dart';
 import 'screens/community_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.remove("jwtToken"); // 기존 토큰 강제 삭제
+
   final authProvider = AuthProvider();
-  await authProvider.tryAutoLogin(); // 앱 시작할 때 토큰 체크
+  await authProvider.tryAutoLogin(); // 앱 시작 시 체크 (이제 항상 null)
 
   runApp(
     ChangeNotifierProvider.value(

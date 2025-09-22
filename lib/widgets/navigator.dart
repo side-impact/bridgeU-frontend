@@ -12,7 +12,10 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.translate), label: 'Translate'),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.translate),
+          label: 'Translate',
+        ),
         BottomNavigationBarItem(icon: Icon(Icons.forum), label: 'Community'),
         BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chatbot'),
       ],

@@ -10,7 +10,7 @@ class AuthProvider with ChangeNotifier {
   String? get token => _token;
 
   static const String baseUrl =
-      "http://localhost:8080"; // 백엔드 주소 (나중에 서버 주소로 변경)
+      "http://172.17.176.1:8080"; // 백엔드 주소 (나중에 서버 주소로 변경)
 
   /// 앱 실행 시 자동 로그인 체크
   Future<void> tryAutoLogin() async {
@@ -20,6 +20,9 @@ class AuthProvider with ChangeNotifier {
     if (storedToken != null && storedToken.isNotEmpty) {
       _token = storedToken;
       notifyListeners();
+      debugPrint("Stored token found: $_token"); // ← 여기에 추가
+    } else {
+      debugPrint("No stored token found"); // ← 토큰이 없을 때
     }
   }
 

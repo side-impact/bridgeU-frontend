@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'signup_complete_screen.dart';
 
+import 'package:provider/provider.dart';
+import '../providers/auth_provider.dart';
+
 class PasswordScreen extends StatefulWidget {
   final String name;
   final String email;
@@ -180,7 +183,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         final password = passwordController.text;
                         final confirm = confirmController.text;
 
@@ -199,13 +202,36 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           return;
                         }
 
-                        // 모두 통과하면 다음 화면으로
-                        Navigator.push(
+                        // AuthProvider 가져오기
+                        final authProvider = Provider.of<AuthProvider>(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => const SignUpCompleteScreen(),
-                          ),
+                          listen: false,
                         );
+
+                        // 회원가입 API 호출
+                        bool success = await authProvider.register(
+                          widget.email,
+                          password,
+                          widget.name,
+                        );
+
+                        if (success) {
+                          // 성공 시 다음 화면으로
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const SignUpCompleteScreen(),
+                            ),
+                          );
+                        } else {
+                          // 실패 시 에러 표시
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Registration failed. Try again."),
+                            ),
+                          );
+                        }
                       },
                       child: const Text(
                         "Next",
