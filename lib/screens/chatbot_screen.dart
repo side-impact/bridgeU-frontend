@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-<<<<<<< Updated upstream
-=======
-import '../widgets/navigator.dart';
-import '../widgets/screen_title.dart';
->>>>>>> Stashed changes
+import 'community_screen.dart';
 
 class ChatbotScreen extends StatefulWidget {
   const ChatbotScreen({super.key});
@@ -25,31 +21,34 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< Updated upstream
-      appBar: AppBar(
-        title: Text("$selectedSchool FAQ Chatbot"),
-        backgroundColor: _getSchoolColor(selectedSchool),
-        actions: [
-          TextButton(
-            onPressed: () => _showSchoolSelection(),
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.white,
-              minimumSize: const Size(100, 40),
-            ),
-            child: Text(
-              selectedSchool,
-              style: TextStyle(color: _getSchoolColor(selectedSchool)),
-            ),
+        appBar: AppBar(
+          title: Text("$selectedSchool FAQ Chatbot"),
+          backgroundColor: _getSchoolColor(selectedSchool),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const CommunityScreen()),
+              );
+            },
           ),
-          const SizedBox(width: 8),
-        ],
-      ),
-      body: _buildSchoolChatbot(selectedSchool),
-=======
-      appBar: AppBar(title: const ScreenTitle('Chatbot')),
-      body: const Center(child: Text('Chatbot Screen')),
-      bottomNavigationBar: const BottomNavBar(currentIndex: 2),
->>>>>>> Stashed changes
+          actions: [
+            TextButton(
+              onPressed: () => _showSchoolSelection(),
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.white,
+                minimumSize: const Size(100, 40),
+              ),
+              child: Text(
+                selectedSchool,
+                style: TextStyle(color: _getSchoolColor(selectedSchool)),
+              ),
+            ),
+            const SizedBox(width: 8),
+          ],
+        ),
+        body: _buildSchoolChatbot(selectedSchool),
     );
   }
 

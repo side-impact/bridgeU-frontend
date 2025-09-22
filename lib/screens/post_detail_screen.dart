@@ -135,10 +135,7 @@ class PostDetailScreen extends StatelessWidget {
 
   Future<void> _deletePost(BuildContext context) async {
     try {
-      // TODO: JWT에서 실제 user_id 필요요
-      const currentUserId = '1'; // 임시
-      
-      await PostService.deletePost(post.id, currentUserId);
+      await PostService.deletePost(post.id);
       
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

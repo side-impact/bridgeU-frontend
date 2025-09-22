@@ -9,8 +9,8 @@ class AuthProvider with ChangeNotifier {
 
   String? get token => _token;
 
-  static const String baseUrl =
-      "http://172.17.176.1:8080"; // 백엔드 주소 (나중에 서버 주소로 변경)
+  static const String baseUrl = //TODO baseuURL한번에 관리리
+      "http://localhost:8080"; // 백엔드 주소 (나중에 서버 주소로 변경)
 
   /// 앱 실행 시 자동 로그인 체크
   Future<void> tryAutoLogin() async {

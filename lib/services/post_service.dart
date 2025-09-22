@@ -70,17 +70,11 @@ class PostService {
   }
 
   // GET /api/posts/{post_id}
-  static Future<Post> getPostDetail(String postId, {String? currentUserId}) async {
-    print('게시물 상세 API 호출: /api/posts/$postId, userId: $currentUserId');
-    
-    final headers = <String, dynamic>{};
-    if (currentUserId != null) {
-      headers['X-Temp-User-Id'] = currentUserId;
-    }
+  static Future<Post> getPostDetail(String postId) async {
+    print('게시물 상세 API 호출: /api/posts/$postId');
     
     final response = await dio.get(
       EP.postDetail(postId),
-      options: Options(headers: headers),
     );
     
     print('게시물 상세 API 응답: ${response.data}');
@@ -92,46 +86,36 @@ class PostService {
   }
 
   // PUT /api/posts/{post_id}
-  static Future<void> updatePost(String postId, String currentUserId, Map<String, dynamic> updateData) async {
-    print('게시물 수정 API 호출: /api/posts/$postId, userId: $currentUserId');
+  static Future<void> updatePost(String postId, Map<String, dynamic> updateData) async {
+    print('게시물 수정 API 호출: /api/posts/$postId');
     print('수정 데이터: $updateData');
     
     final response = await dio.put(
       EP.postDetail(postId),
       data: updateData,
-      options: Options(headers: {
-        'X-Temp-User-Id': currentUserId,
-      }),
     );
     
     print('게시물 수정 API 응답: ${response.data}');
   }
   
   // DELETE /api/posts/{post_id}
-  static Future<void> deletePost(String postId, String currentUserId) async {
-    print('게시물 삭제 API 호출: /api/posts/$postId, userId: $currentUserId');
+  static Future<void> deletePost(String postId) async {
+    print('게시물 삭제 API 호출: /api/posts/$postId');
     
     final response = await dio.delete(
       EP.postDetail(postId),
-      options: Options(headers: {
-        'X-Temp-User-Id': currentUserId,
-      }),
     );
     
     print('게시물 삭제 API 응답: ${response.data}');
   }
 
   // POST /api/posts
-  static Future<void> createPost(String currentUserId, Map<String, dynamic> postData) async {
+  static Future<void> createPost(Map<String, dynamic> postData) async {
     print('게시물 생성 API 호출: $postData');
-    print('사용자 ID: $currentUserId');
     
     final response = await dio.post(
       EP.posts,
       data: postData,
-      options: Options(headers: {
-        'X-Temp-User-Id': currentUserId,
-      }),
     );
     
     print('게시물 생성 API 응답: ${response.data}');

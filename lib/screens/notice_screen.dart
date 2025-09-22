@@ -179,10 +179,9 @@ class _NoticeScreenState extends State<NoticeScreen> {
                   onTap: () async {
                     try {
                       print('공지사항 상세 호출: ${feeds[index].postId}');
-                      const currentUserId = '1'; // 임시로 사용자 ID 1 사용
+                      // TODO: 향후 사용자 인증 구현 시 실제 사용자 ID 사용
                       final post = await PostService.getPostDetail(
-                        feeds[index].postId.toString(), 
-                        currentUserId: currentUserId
+                        feeds[index].postId.toString()
                       );
                       print('공지사항 상세 로드 성공: ${post.title}');
                       if (mounted) {

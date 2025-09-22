@@ -5,6 +5,7 @@ import 'screens/login_screen.dart';
 import 'screens/community_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'utils/theme.dart';
+import 'utils/navigation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +35,7 @@ class BridgeUApp extends StatelessWidget {
           title: 'BridgeU',
           debugShowCheckedModeBanner: false,
           theme: brandTheme,
+          navigatorKey: navigatorKey, // Global navigator key 설정
           routes: {
             '/login': (ctx) => const LoginScreen(),
             '/community': (ctx) => const CommunityScreen(),

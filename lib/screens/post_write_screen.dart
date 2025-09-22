@@ -62,10 +62,7 @@ class _PostWriteScreenState extends State<PostWriteScreen> {
 
   Future<void> _loadPostForEdit() async {
     try {
-      // TODO: 실제 사용자 ID를 가져오는 로직 필요
-      const currentUserId = '1'; // 임시로 사용자 ID 1 사용
-      
-      final post = await PostService.getPostDetail(widget.postId!, currentUserId: currentUserId);
+      final post = await PostService.getPostDetail(widget.postId!);
       
       // 제목 설정
       _titleController.text = post.title;
@@ -250,8 +247,7 @@ class _PostWriteScreenState extends State<PostWriteScreen> {
       print('전송할 데이터: $postData');
 
       if (widget.isEditMode && widget.postId != null) {
-        const currentUserId = '1'; // TODO: 여기 실제 유저의 ID가 들어가야함함
-        await PostService.updatePost(widget.postId!, currentUserId, postData);
+        await PostService.updatePost(widget.postId!, postData);
         
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -261,9 +257,8 @@ class _PostWriteScreenState extends State<PostWriteScreen> {
         }
       } else {//새 post 작성성
         print('새 글 작성 모드 - API 호출 시작');
-        const currentUserId = '1'; // TODO
         
-        await PostService.createPost(currentUserId, postData);
+        await PostService.createPost(postData);
         print('새 글 작성 API 호출 완료');
         
         if (mounted) {

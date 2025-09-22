@@ -244,9 +244,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                       onTap: () async {
                         try {
                           print('Hot 게시물 상세 호출: ${hotPost.postId}');
-                          // TODO: JWT에서 실제 user_id 가져오기!
-                          const currentUserId = '1'; //임시임임
-                          final post = await PostService.getPostDetail(hotPost.postId.toString(), currentUserId: currentUserId);
+                          final post = await PostService.getPostDetail(hotPost.postId.toString());
                           print('Hot 게시물 상세 로드 성공: ${post.title}');
                           if (mounted) {
                             Navigator.push(
@@ -294,9 +292,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
                   onTap: () async {
                     try {
                       print('게시물 상세 호출: ${feeds[index].postId}');
-                      // TODO
-                      const currentUserId = '1'; // 임시로 사용자 ID 1 사용
-                      final post = await PostService.getPostDetail(feeds[index].postId.toString(), currentUserId: currentUserId);
+                      // TODO: 향후 사용자 인증 구현 시 실제 사용자 ID 사용
+                      final post = await PostService.getPostDetail(feeds[index].postId.toString());
                       print('게시물 상세 로드 성공: ${post.title}');
                       if (mounted) {
                         Navigator.push(
