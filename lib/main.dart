@@ -4,6 +4,7 @@ import 'providers/auth_provider.dart';
 import 'screens/login_screen.dart';
 import 'screens/community_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'utils/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,8 +31,9 @@ class BridgeUApp extends StatelessWidget {
     return Consumer<AuthProvider>(
       builder: (context, authProvider, _) {
         return MaterialApp(
+          title: 'BridgeU',
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+          theme: brandTheme,
           routes: {
             '/login': (ctx) => const LoginScreen(),
             '/community': (ctx) => const CommunityScreen(),
@@ -44,3 +46,4 @@ class BridgeUApp extends StatelessWidget {
     );
   }
 }
+

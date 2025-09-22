@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+<<<<<<< Updated upstream
+=======
+import '../widgets/navigator.dart';
+import '../widgets/screen_title.dart';
+>>>>>>> Stashed changes
 
 class ChatbotScreen extends StatefulWidget {
   const ChatbotScreen({super.key});
@@ -20,6 +25,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< Updated upstream
       appBar: AppBar(
         title: Text("$selectedSchool FAQ Chatbot"),
         backgroundColor: _getSchoolColor(selectedSchool),
@@ -39,6 +45,11 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         ],
       ),
       body: _buildSchoolChatbot(selectedSchool),
+=======
+      appBar: AppBar(title: const ScreenTitle('Chatbot')),
+      body: const Center(child: Text('Chatbot Screen')),
+      bottomNavigationBar: const BottomNavBar(currentIndex: 2),
+>>>>>>> Stashed changes
     );
   }
 
