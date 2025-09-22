@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'providers/auth_provider.dart';
 import 'screens/login_screen.dart';
+import 'screens/community_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const BridgeUApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.remove("jwtToken"); // 기존 토큰 강제 삭제
+
+  final authProvider = AuthProvider();
+  await authProvider.tryAutoLogin(); // 앱 시작 시 체크 (이제 항상 null)
+
+  runApp(
+    ChangeNotifierProvider.value(
+      value: authProvider,
+      child: const BridgeUApp(),
+    ),
+  );
 }
 
 class BridgeUApp extends StatelessWidget {
@@ -10,12 +27,20 @@ class BridgeUApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'BridgeU',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const LoginScreen(),
+    return Consumer<AuthProvider>(
+      builder: (context, authProvider, _) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+          routes: {
+            '/login': (ctx) => const LoginScreen(),
+            '/community': (ctx) => const CommunityScreen(),
+          },
+          home: authProvider.isLoggedIn
+              ? const CommunityScreen()
+              : const LoginScreen(),
+        );
+      },
     );
   }
 }
